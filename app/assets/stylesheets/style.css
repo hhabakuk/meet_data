@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: Georgia, serif;
+    font-weight: normal;
+    letter-spacing: 1px;
+    color: #808080;
+    background: #FFFFFF;
+
+.container {
+    margin: 0 auto;
+    size: 88%;
+}
+
+.footer {
+  padding-left: 10%;
+}
+
+.greetings {
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border: solid #808080 bold;
+  border-radius: 10px;
+}
+
+.content_wrapper {
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border: solid #808080 bold;
+  border-radius: 10px;
+}
+
+.content {
+  border: solid #808080 bold;
+  width: 60%;
+}
+.content_text {
+  border: solid #808080 bold;
+  width: 38%;
+}
