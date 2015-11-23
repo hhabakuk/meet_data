@@ -5,10 +5,25 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
+  <div class="container">
+    
+  <%= yield %>
 
-<%= yield %>
+    <div class="footer">
+      <div class="about">
+       <a href="">HOME</a>
+       "|"
+       <a href="">FEATURES</a>
+       "|"
+       <a href="">BLOG</a>
+       "|"
+       <a href="">TERMS</a>
+      </div>
+    </div>
 
+  </div>
 </body>
 </html>
