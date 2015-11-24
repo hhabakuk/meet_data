@@ -1,8 +1,8 @@
 class CreateCities < ActiveRecord::Migration
   def change
     create_table :cities do |t|
-      t.string :name
-      t.string :country
+      t.text :name
+      t.text :country
       t.integer :member_count
 
       t.timestamps null: false
