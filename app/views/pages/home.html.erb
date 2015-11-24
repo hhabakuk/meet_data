@@ -1,37 +1,35 @@
+
+
  <div class="greetings">
   <h1 class="index">
-  HELLO... 
+  HELLO...
   </h1>
   <h1 class="index_about">
-  WHERE TO HELPS YOU TO FIGURE OUT WHERE TO MEET UP.  
+  WHERE TO HELPS YOU TO FIGURE OUT WHERE TO MEET UP.
   </h1>
 </div>
-<div class="content_wrapper">
-  <div class="content" id="output"> content</div>
-  <div class="content_text">text</div>
+<div class="buttons">
+
 </div>
 
-<script type="text/template" id="cat_template"> 
-  <button> 
-    {{ name }}
-  </button>
+<script type="text/template" id="cat_template">
+  <button class="category-button" data-categoryid={{ id }}>{{ name }}</button>
 </script>
 
 <script >
-  
+
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 }
 
-var display_category = function(category_name){
-  var button = ["<button>"];
+var display_category = function(category_name, category_id){
   var $template = _.template($('#cat_template').html());
   var $htmlOutput = $template({
-    name: category_name
+    name: category_name,
+    id: category_id
    });
-  $('#output').append($htmlOutput);
+  $('.buttons').append($htmlOutput);
 }
-
 
 var options = {
   url: 'http://localhost:3000/api/categories',
@@ -40,13 +38,47 @@ var options = {
 }
 
 $.ajax(options).done(function(data){
-  console.log(data);
   _.each(data, function(category, index){
     var category_name = category.name;
-     display_category(category_name)
-
+    var category_id = category.id;
+      display_category(category_name, category_id)
   });
-  
 });
-  
+
+$('.buttons').on('click', '.category-button', function() {
+  var category_name_clicked = $(this).text();
+
+  console.log(category_name_clicked)
+  var options = {
+    type: "GET",
+    url: 'http://localhost:3000/api/groups',
+    dataType: 'json'
+  };
+
+  var label = []
+  var data = []
+  var combination = []
+
+  $.ajax(options).done(function(groups) {
+    _.each(groups, function(group) {
+      if (group.category_name === category_name_clicked) {
+        combination.push({ name: group.city_name, group_count: group.group_count})
+      };
+    });
+
+    var display_cities = combination.sort(function(a, b) {
+      return parseFloat(b.group_count) - parseFloat(a.group_count);
+    });
+    console.log(display_cities)
+
+    for (var i = 0; i <= 10; i += 1) {
+      label.push(display_cities[i].name);
+      data.push(display_cities[i].group_count);
+    };
+    console.log(label)
+    console.log(data)
+  });
+
+});
+
 </script>
