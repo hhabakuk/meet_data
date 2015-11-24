@@ -24,7 +24,7 @@ _.templateSettings = {
 }
 
 var display_category = function(category_name){
-  var button = ["<button>"];
+  
   var $template = _.template($('#cat_template').html());
   var $htmlOutput = $template({
     name: category_name
@@ -33,7 +33,7 @@ var display_category = function(category_name){
 }
 
 
-var options = {
+var options = { 
   url: 'http://localhost:3000/api/categories',
   type: 'get',
   dataType: 'json'
@@ -48,5 +48,10 @@ $.ajax(options).done(function(data){
   });
   
 });
+
+$('<button>').on('click', function(){
+  console.log('hello');
+});
+
   
 </script>
