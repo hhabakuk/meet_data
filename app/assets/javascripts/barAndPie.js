@@ -1,8 +1,8 @@
 $('.categories-buttons').on('click', '.category-button', function() {
-  console.log('hello');
+  // console.log('hello');
   var category_name_clicked = $(this).text();
 
-  console.log(category_name_clicked)
+  // console.log(category_name_clicked)
   var options = {
     type: "GET",
     url: 'http://localhost:3000/api/groups',
