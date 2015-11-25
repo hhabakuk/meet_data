@@ -41,3 +41,10 @@ body {
   border: solid #808080 bold;
   width: 38%;
 }
+
+.bar-pie-charts {
+    display: flex;
+    justify-content: space-around;
+    background-color: blue;
+}
+

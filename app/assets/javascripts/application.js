@@ -17,7 +17,6 @@
 //= require_tree .
 //= require categoryButtons
 //= require barAndPie
-//= require compareButtons
 //= require radar
 
 
