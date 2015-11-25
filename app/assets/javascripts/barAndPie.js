@@ -1,17 +1,35 @@
-var pieDataSorted = []
+var pieDataSorted = [] // global to be used by radar chart
 
+// when category is selected, display bar and pie chart
 $('.categories-buttons').on('click', '.category-button', function() {
 
+  // var barChart = 0;
+  // var pieChart = 0;
+  //
   // clear charts and comparisons
-  $('#bar-chart').empty();
-  $('#pie-chart').empty();
+  if ($('#bar-chart').html() !== '') {
+    barChart.clear();
+  };
+
+  if ($('#pie-chart').html() !== '') {
+    pieChart.clear();
+  };
+
   $('.comparison-text').empty();
   $('.comparison-buttons').empty();
   $('#radar-chart').empty();
 
   // store name of category selected
-  var categoryNameClicked = $(this).text();
-  console.log(categoryNameClicked)
+  var selectedCategory = $(this).text();
+  console.log(selectedCategory)
+
+  var barLabel = []; // names of the columns in barchart
+  var barValues = []; // values of the columns in barchart
+  var barData = []; // array of objects, name: group.city_name, city_id: group.city_id, category_name: group.category_name, group_count: group.group_count
+  var topCity = 0; // the city that has most groups per category selected by the user
+  var pieData = []; // array of objects, pieLabel: group.category_name, pieValue: group.group_count
+  var pieValues = []; // values of the pieslices
+  var pieLabel = []; // name of the pieslices
 
   // GET call to database
   var options = {
@@ -20,22 +38,11 @@ $('.categories-buttons').on('click', '.category-button', function() {
     dataType: 'json'
   };
 
-  var barLabel = []; // names of the columns in barchart
-  var barValues = []; // values of the columns in barchart
-  var barData = []; // array of objects, name: group.city_name, city_id: group.city_id, group_count: group.group_count
-
-  var topCity = []; // the city that has most groups per category selected by the user
-  var pieData = []; // array of objects, pieLabel: group.category_name, pieValue: group.group_count
-  var pieValues = []; // values of the pieslices
-  var pieLabel = []; // name of the pieslices
-
-
   $.ajax(options).done(function(data) {
 
-    // getting the data for the bar chart
-
+    // get bar chart data for selected category
     _.each(data, function(group) {
-      if (group.category_name === categoryNameClicked) {
+      if (group.category_name === selectedCategory) {
         barData.push({
           name: group.city_name,
           city_id: group.city_id,
@@ -45,58 +52,39 @@ $('.categories-buttons').on('click', '.category-button', function() {
       };
     });
 
-    var display_cities = barData.sort(function(a, b) {
+    // sort bar chart data by group_count (high -> low)
+    var barDataSorted = barData.sort(function(a, b) {
       return parseFloat(b.group_count) - parseFloat(a.group_count);
     });
 
-
+    // push top 10 cities into barLabel and barValues
     for (var i = 0; i < 10; i += 1) {
-      barLabel.push(display_cities[i].name);
-      barValues.push(display_cities[i].group_count);
+      barLabel.push(barDataSorted[i].name);
+      barValues.push(barDataSorted[i].group_count);
     };
-      topCity.push(barLabel[0]);
+
+    topCity = barLabel[0];
 
     console.log(barLabel);
     console.log(barValues);
     console.log(topCity);
 
-   // get the data for pie chart
+    // DRAW THE BAR CHART //
+    var ctxBar = $("#bar-chart").get(0).getContext("2d");
 
-
-    _.each(data, function(group) {
-        if (group.city_name === topCity[0]) {
-
-          pieData.push({ pieLabel: group.category_name, pieValue: group.group_count})
-        };
-      });
-
-  console.log(pieData);
-
-  // sort most popular groups in topCity
-  pieDataSorted = pieData.sort(function(a, b) {
-    return parseFloat(b.pieValue) - parseFloat(a.pieValue);
-  });
-
-  //drawing the bar chart
-
-  var ctxBar = $("#bar-chart").get(0).getContext("2d");
-
-
-  var dataBar = {
+    var dataBar = {
       labels: barLabel,
-      datasets: [
-          {
-              label: "Most probable cities",
-              fillColor: "rgba(220,220,220,0.5)",
-              strokeColor: "rgba(220,220,220,0.8)",
-              highlightFill: "rgba(220,220,220,0.75)",
-              highlightStroke: "rgba(220,220,220,1)",
-              data: barValues
-          }
-      ]
-  };
+      datasets: [{
+        label: "Most probable cities",
+        fillColor: "rgba(220,220,220,0.5)",
+        strokeColor: "rgba(220,220,220,0.8)",
+        highlightFill: "rgba(220,220,220,0.75)",
+        highlightStroke: "rgba(220,220,220,1)",
+        data: barValues
+      }]
+    };
 
-  var optionsBar = {
+    var optionsBar = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero : true,
 
@@ -129,75 +117,90 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
       //String - A legend template
       legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%%=datasets[i].fillColor%>\"></span><%%if(datasets[i].label){%><%%=datasets[i].label%><%%}%></li><%%}%></ul>"
+    };
 
-  }
+    // create new bar chart
+    var barChart = new Chart(ctxBar).Bar(dataBar, optionsBar);
 
-  var barChart = new Chart(ctxBar).Bar(dataBar, optionsBar);
+    // get the pie chart data for top city
+     _.each(data, function(group) {
+       if (group.city_name === topCity) {
+         pieData.push({
+           pieLabel: group.category_name,
+           pieValue: group.group_count
+         });
+       };
+     });
+     console.log(pieData);
 
+     // sort most popular groups in top city
+     pieDataSorted = pieData.sort(function(a, b) {
+       return parseFloat(b.pieValue) - parseFloat(a.pieValue);
+     });
 
-  // drawing the pie chart
+    // DRAW THE PIE CHART //
+    var ctxPie = $("#pie-chart").get(0).getContext("2d");
 
-  var ctxPie = $("#pie-chart").get(0).getContext("2d");
-  // var ctxPie = document.getElementById("pie-chart").getContext("2d");
+    var dataPie = [];
 
-  var dataPie = [];
+    // HELEN TO UPDATE COLORS //
+    var colorPie = ['#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A', '#FFFD6A'];
 
-  for (var i = 0; i < 10; i += 1) {
+    for (var i = 0; i < 10; i += 1) {
+      dataPie.push({
+        value: pieDataSorted[i].pieValue,
+        color: colorPie[i],
+        highlight: "#5AD3D1",
+        label: pieDataSorted[i].pieLabel
+      });
+    };
+    console.log(dataPie);
 
-    dataPie.push({ value: pieDataSorted[i].pieValue, color: "#F7464A", highlight: "#5AD3D1", label: pieDataSorted[i].pieLabel });
+    var optionsPie = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke : true,
 
-  };
+      //String - The colour of each segment stroke
+      segmentStrokeColor : "#fff",
 
-  console.log(dataPie);
+      //Number - The width of each segment stroke
+      segmentStrokeWidth : 2,
 
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout : 50, // This is 0 for Pie charts
 
+      //Number - Amount of animation steps
+      animationSteps : 100,
 
-var optionsPie = {
-    //Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke : true,
+      //String - Animation easing effect
+      animationEasing : "easeOutBounce",
 
-    //String - The colour of each segment stroke
-    segmentStrokeColor : "#fff",
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate : true,
 
-    //Number - The width of each segment stroke
-    segmentStrokeWidth : 2,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale : false,
 
-    //Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout : 50, // This is 0 for Pie charts
+      //String - A legend template
+      legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%%=segments[i].fillColor%>\"></span><%%if(segments[i].label){%><%%=segments[i].label%><%%}%></li><%%}%></ul>"
+    };
 
-    //Number - Amount of animation steps
-    animationSteps : 100,
+    // create new pie chart
+    var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
 
-    //String - Animation easing effect
-    animationEasing : "easeOutBounce",
+    // display the top city below the pie chart
+    $("#top-city").append(topCity);
 
-    //Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate : true,
+    // DISPLAY COMPARISON BUTTONS //
+    // display top city
+    var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + barDataSorted[0].name + ' with:');
+    $newCompareText.appendTo('.comparison-text');
 
-    //Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale : false,
-
-    //String - A legend template
-    legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%%=segments[i].fillColor%>\"></span><%%if(segments[i].label){%><%%=segments[i].label%><%%}%></li><%%}%></ul>"
-
-};
-
-  var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
-
-  // display the top city below the pie chart
-
-  $("#top-city").append(topCity);
-
-  // display comparison buttons
-
-  var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + display_cities[0].name + ' with:');
-  $newCompareText.appendTo('.comparison-text');
-
-  for (var i = 1; i < 10; i += 1) {
-    var $newCompareButton = $('<button>').addClass('compare-button').attr('data-cityid', display_cities[i].city_id).text(display_cities[i].name);
-    $newCompareButton.appendTo('.comparison-buttons');
-  };
+    // generate top 9 city buttons
+    for (var i = 1; i < 10; i += 1) {
+      var $newCompareButton = $('<button>').addClass('compare-button').attr('data-city-id', barDataSorted[i].city_id).text(barDataSorted[i].name);
+      $newCompareButton.appendTo('.comparison-buttons');
+    };
 
   });
-
 });
