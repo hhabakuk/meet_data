@@ -1,38 +1,54 @@
-$('.categories-buttons').on('click', '.category-button', function() {
-  var category_name_clicked = $(this).text();
+var pieDataSorted = []
 
-  console.log(category_name_clicked)
+$('.categories-buttons').on('click', '.category-button', function() {
+
+  // clear charts and comparisons
+  $('#bar-chart').empty();
+  $('#pie-chart').empty();
+  $('.comparison-text').empty();
+  $('.comparison-buttons').empty();
+  $('#radar-chart').empty();
+
+  // store name of category selected
+  var categoryNameClicked = $(this).text();
+  console.log(categoryNameClicked)
+
+  // GET call to database
   var options = {
     type: "GET",
     url: 'http://localhost:3000/api/groups',
     dataType: 'json'
   };
 
+  var barLabel = []; // names of the columns in barchart
+  var barValues = []; // values of the columns in barchart
+  var barData = []; // array of objects, name: group.city_name, city_id: group.city_id, group_count: group.group_count
+
+  var topCity = []; // the city that has most groups per category selected by the user
+  var pieData = []; // array of objects, pieLabel: group.category_name, pieValue: group.group_count
+  var pieValues = []; // values of the pieslices
+  var pieLabel = []; // name of the pieslices
 
 
-  var barLabel = [] // names of the columns in barchart
-  var barValues = [] // values of the columns in barchart
-  var barData = [] // array of objects, name: group.city_name, city_id: group.city_id, group_count: group.group_count
-
-  var topCity = [] // the city that has most groups per category selected by the user
-  var pieData = [] // array of objects, pieLabel: group.category_name, pieValue: group.group_count
-  var pieValues = [] // values of the pieslices
-  var pieLabel = [] // name of the pieslices
-
-  $.ajax(options).done(function(groups) {
+  $.ajax(options).done(function(data) {
 
     // getting the data for the bar chart
 
-    _.each(groups, function(group) {
-      if (group.category_name === category_name_clicked) {
-        barData.push({ name: group.city_name, city_id: group.city_id, group_count: group.group_count})
+    _.each(data, function(group) {
+      if (group.category_name === categoryNameClicked) {
+        barData.push({
+          name: group.city_name,
+          city_id: group.city_id,
+          category_name: group.category_name,
+          group_count: group.group_count
+        });
       };
     });
 
     var display_cities = barData.sort(function(a, b) {
       return parseFloat(b.group_count) - parseFloat(a.group_count);
     });
-    
+
 
     for (var i = 0; i < 10; i += 1) {
       barLabel.push(display_cities[i].name);
@@ -40,23 +56,26 @@ $('.categories-buttons').on('click', '.category-button', function() {
     };
       topCity.push(barLabel[0]);
 
-    console.log(barLabel)
-    console.log(barValues)
-    console.log(topCity)
+    console.log(barLabel);
+    console.log(barValues);
+    console.log(topCity);
 
    // get the data for pie chart
 
-  
-    _.each(groups, function(group) {
+
+    _.each(data, function(group) {
         if (group.city_name === topCity[0]) {
 
           pieData.push({ pieLabel: group.category_name, pieValue: group.group_count})
         };
       });
 
-  console.log(pieData)
+  console.log(pieData);
 
-
+  // sort most popular groups in topCity
+  pieDataSorted = pieData.sort(function(a, b) {
+    return parseFloat(b.pieValue) - parseFloat(a.pieValue);
+  });
 
   //drawing the bar chart
 
@@ -73,7 +92,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
               highlightFill: "rgba(220,220,220,0.75)",
               highlightStroke: "rgba(220,220,220,1)",
               data: barValues
-          },
+          }
       ]
   };
 
@@ -118,15 +137,15 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
   // drawing the pie chart
 
-  // var ctxPie = $("#pie-chart").get(0).getContext("2d");
-  var ctxPie = document.getElementById("pie-chart").getContext("2d");
+  var ctxPie = $("#pie-chart").get(0).getContext("2d");
+  // var ctxPie = document.getElementById("pie-chart").getContext("2d");
 
-  var dataPie = []
+  var dataPie = [];
 
-  for (var i = 0; i < 33; i += 1) {
+  for (var i = 0; i < 10; i += 1) {
 
-    dataPie.push({ value: pieData[i].pieValue, color: "#F7464A", highlight: "#5AD3D1", label: pieData[i].pieLabel });
-  
+    dataPie.push({ value: pieDataSorted[i].pieValue, color: "#F7464A", highlight: "#5AD3D1", label: pieDataSorted[i].pieLabel });
+
   };
 
   console.log(dataPie);
@@ -163,13 +182,13 @@ var optionsPie = {
 
 };
 
-  var pieChart = new Chart(ctxPie).Pie(dataPie,optionsPie);
+  var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
 
   // display the top city below the pie chart
 
-  $("#top-city").append(topCity)
+  $("#top-city").append(topCity);
 
-  // display comparison buttons 
+  // display comparison buttons
 
   var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + display_cities[0].name + ' with:');
   $newCompareText.appendTo('.comparison-text');
