@@ -3,21 +3,18 @@ var pieDataSorted = [] // global to be used by radar chart
 // when category is selected, display bar and pie chart
 $('.categories-buttons').on('click', '.category-button', function() {
 
-  // var barChart = 0;
-  // var pieChart = 0;
-  //
-  // clear charts and comparisons
-  if ($('#bar-chart').html() !== '') {
-    barChart.clear();
-  };
-
-  if ($('#pie-chart').html() !== '') {
-    pieChart.clear();
-  };
-
   $('.comparison-text').empty();
   $('.comparison-buttons').empty();
-  $('#radar-chart').empty();
+  $('#top-city').empty();
+
+  $('#bar-chart').remove();
+  $('.bar-chart').append('<canvas id="bar-chart" width="400" height="400"><canvas>');
+
+  $('#pie-chart').remove();
+  $('.pie-chart').append('<canvas id="pie-chart" width="400" height="400"><canvas>');
+
+  $('#radar-chart').remove();
+  $('.radar-chart').append('<canvas id="radar-chart" width="600" height="600"><canvas>');
 
   // store name of category selected
   var selectedCategory = $(this).text();
