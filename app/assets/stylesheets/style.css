@@ -2,15 +2,26 @@ body {
     margin: 0;
     text-transform: uppercase;
     font-size: 11px;
-    font-family: Georgia, serif;
+    font-family: Menlo, regular;
     font-weight: normal;
     letter-spacing: 1px;
     color: #808080;
-    background: #FFFFFF;
+    background: #f2f1f1;
+
+  }
+
 
 .container {
     margin: 0 auto;
     size: 88%;
+}
+
+.first-container {
+  height: 100vh;
+}
+header {
+
+  text-align: center; 
 }
 
 .footer {
@@ -42,9 +53,45 @@ body {
   width: 38%;
 }
 
+
+
+.category-button {
+  font-family: Menlo, regular;
+  color: #000000;
+  font-size: 10px;
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #000000 2px;
+  text-decoration: none;
+  margin: 1px;
+}
+
+.category-button:hover {
+  background: #64d4cd;
+  text-decoration: none;
+}
+
 .bar-pie-charts {
     display: flex;
     justify-content: space-around;
-    background-color: blue;
+    margin: 3em;
+
 }
 
+.comparison {
+  float: left;
+  margin: 0px;
+}
+
+.comparison-text {
+  width: 30%;
+  display: inline-block;
+  /*display: float;*/
+}
+
+.comparison-buttons {
+  width: 65%;
+  display: inline-block;
+
+  /*display: float;*/
+}
