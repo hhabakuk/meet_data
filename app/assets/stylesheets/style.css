@@ -7,6 +7,7 @@ body {
     letter-spacing: 1px;
     color: #808080;
     background: #f2f1f1;
+    text-align: center;
 
   }
 
@@ -16,9 +17,6 @@ body {
     size: 88%;
 }
 
-.first-container {
-  height: 100vh;
-}
 header {
 
   text-align: center; 
@@ -66,9 +64,18 @@ header {
   margin: 1px;
 }
 
+.categories-buttons {
+  text-align: center;
+}
+
 .category-button:hover {
-  background: #64d4cd;
+  background: #fffd6a;
   text-decoration: none;
+}
+
+.category-button:focus {
+  background-color:#fffd6a;
+  outline: 0;
 }
 
 .bar-pie-charts {
@@ -78,20 +85,52 @@ header {
 
 }
 
+.second-container {
+    width: 100%;
+    text-align: center;
+}
+
+
 .comparison {
-  float: left;
-  margin: 0px;
+  
+  margin: auto;
+  display: inline-block;
+  justify-content: space-around;
+  margin: 3em;
+
 }
 
 .comparison-text {
-  width: 30%;
+  width: 34%;
   display: inline-block;
-  /*display: float;*/
+  
+
 }
 
 .comparison-buttons {
-  width: 65%;
+  width: 66%;
   display: inline-block;
 
-  /*display: float;*/
 }
+
+.compare-button {
+  font-family: Menlo, regular;
+  color: #000000;
+  font-size: 10px;
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #000000 2px;
+  text-decoration: none;
+  margin: 1px;
+}
+
+.compare-button:hover {
+  background: #fffd6a;
+  text-decoration: none;
+}
+
+.compare-button:focus {
+  background-color:#fffd6a;
+  outline: 0;
+}
+

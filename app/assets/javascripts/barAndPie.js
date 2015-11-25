@@ -144,7 +144,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
   for (var i = 0; i < 10; i += 1) {
 
-    dataPie.push({ value: pieDataSorted[i].pieValue, color: "#F7464A", highlight: "#5AD3D1", label: pieDataSorted[i].pieLabel });
+    dataPie.push({ value: pieDataSorted[i].pieValue, color: "#5AD3D1", highlight: "#FFBF69", label: pieDataSorted[i].pieLabel });
 
   };
 
@@ -157,7 +157,7 @@ var optionsPie = {
     segmentShowStroke : true,
 
     //String - The colour of each segment stroke
-    segmentStrokeColor : "#fff",
+    segmentStrokeColor : "#f2f1f1",
 
     //Number - The width of each segment stroke
     segmentStrokeWidth : 2,
