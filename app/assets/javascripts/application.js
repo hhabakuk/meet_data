@@ -15,6 +15,9 @@
 //= require turbolinks
 //= require underscore
 //= require_tree .
-
+//= require categoryButtons
+//= require barAndPie
+//= require compareButtons
+//= require radar
 
 
