@@ -122,6 +122,7 @@ header {
   border: solid #000000 2px;
   text-decoration: none;
   margin: 1px;
+  display: inline-block;
 }
 
 .compare-button:hover {
