@@ -1,9 +1,8 @@
 // when comparison city is selected, display radar chart
 $('.comparison-buttons').on('click','.compare-button',function() {
   // clear chart
-  if ($('#radar-chart').html() !== '') {
-    radarChart.clear();
-  };
+  $('#radar-chart').remove();
+  $('.radar-chart').append('<canvas id="radar-chart" width="600" height="600"><canvas>');
 
   // store name of comparison city selected
   var selectedComparisonCity = $(this).text();
