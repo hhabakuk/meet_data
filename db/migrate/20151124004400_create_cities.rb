@@ -4,6 +4,8 @@ class CreateCities < ActiveRecord::Migration
       t.text :name
       t.text :country
       t.integer :member_count
+      t.decimal :lon
+      t.decimal :lat
 
       t.timestamps null: false
     end

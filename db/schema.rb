@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20151124004558) do
     t.text     "name"
     t.text     "country"
     t.integer  "member_count"
+    t.decimal  "lon"
+    t.decimal  "lat"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
