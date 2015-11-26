@@ -179,7 +179,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
       animationSteps : 100,
 
       //String - Animation easing effect
-      animationEasing : "easeOutBounce",
+      animationEasing : "easeInOutExpo",
 
       //Boolean - Whether we animate the rotation of the Doughnut
       animateRotate : true,
@@ -311,7 +311,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
       topCityAllGroups += pieDataSorted[i].pieValue << 0;
     };
 
-     $("#top-city-all-groups").append('and ' + topCityAllGroups + ' other groups to join');
+     $("#top-city-all-groups").append('and ' + (topCityAllGroups - topCityCategoryGroups) + ' other groups to join');
 
 
     // DISPLAY COMPARISON BUTTONS //
