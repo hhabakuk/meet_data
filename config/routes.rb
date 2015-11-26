@@ -16,11 +16,6 @@ Rails.application.routes.draw do
     resources :maps, only: [:index]
   end
 
-  # map page
-  get '/map' => 'pages#map'
-
-
-
   resources :pages
 
 end

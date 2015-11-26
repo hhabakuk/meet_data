@@ -2,11 +2,11 @@
   <div class="start">
   <h1>There are over 2M cities in the world</h1>
   <h4>Come and see which one is right for you</h4>
-    
+
   </div >
   <div id="letsgo">
   <a href="#compare-me" class="category-button smoothScroll" >Let's go</a>
-    
+
   </div>
 </div>
 
@@ -33,19 +33,18 @@
       <h1 id="top-city"></h1>
       <p id="top-city-category-groups"></p>
       <p id="top-city-category-groups2"></p>
-        
       </div>
     </div>
   </div>
 <div id="compare">
   <div class="comparison">
     <div class="comparison-text">
-      
+
     </div>
     <div class="comparison-buttons">
 
     </div>
-   
+
   </div>
 </div>
 </div>
@@ -67,149 +66,10 @@
 
   <h1>come into my spacerocket</h1>
   <div id="to-map" class="map">
-  <style>
-  #map {
-    background-color: transparent;
-    /*border: 1px solid #ccc;*/
-  }
-  .background {
-    fill: none;
-    pointer-events: all;
-  }
-  #countries, #states {
-    fill: #e0393e;
-    stroke: #fff;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-  #countries .active, #states .active {
-    fill: #89a;
-  }
-  #cities {
-    stroke-width: 0;
-  }
-  .city {
-    fill: #345;
-    stroke: #fff;
-  }
-  pre.prettyprint {
-    border: 1px solid #ccc;
-    margin-bottom: 0;
-    padding: 9.5px;
-  }
-</style>
+    <div id="map"></div>
+  </div>
 
-<div id="map"></div>
-
-
-
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script src="//d3js.org/topojson.v1.min.js"></script>
-<script>
-
-  var m_width = $("#map").width(),
-    width = 938,
-    height = 500,
-    country,
-    state;
-
-  var projection = d3.geo.mercator()
-    .scale(150)
-    .translate([width / 2, height / 1.5]);
-
-  var path = d3.geo.path()
-    .projection(projection);
-
-  var svg = d3.select("#map").append("svg")
-    .attr("preserveAspectRatio", "xMidYMid")
-    .attr("viewBox", "0 0 " + width + " " + height)
-    .attr("width", m_width)
-    .attr("height", m_width * height / width);
-
-    svg.append("rect")
-    .attr("class", "background")
-    .attr("width", width)
-    .attr("height", height)
-    .on("click", country_clicked);
-
-  var g = svg.append("g");
-
-  d3.json("/map/countries.topo.json", function(error, us) {
-    g.append("g")
-      .attr("id", "countries")
-      .selectAll("path")
-      .data(topojson.feature(us, us.objects.countries).features)
-      .enter()
-      .append("path")
-      .attr("id", function(d) { return d.id; })
-      .attr("d", path)
-      .on("click", country_clicked);
-  });
-
-  d3.csv("map/cities.csv", function(error, data) {
-    g.selectAll("circle")
-      .data(data)
-      .enter()
-      .append("a")
-        .attr("xlink:href", function(d) {
-          return "http://www.meetup.com/cities/"+d.country+"/"+d.city;
-        })
-      .append("circle")
-        .attr("cx", function(d) {
-          return projection([d.lon, d.lat])[0];
-        })
-        .attr("cy", function(d) {
-          return projection([d.lon, d.lat])[1];
-        })
-        .attr("r", 2)
-        .style("fill", "black");
-    });
-
-  function zoom(xyz) {
-    g.transition()
-      .duration(750)
-      .attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
-      .selectAll(["#countries", "#states", "#cities"])
-      .style("stroke-width", 1.0 / xyz[2] + "px")
-      .selectAll(".city")
-      .attr("d", path.pointRadius(20.0 / xyz[2]));
-    }
-
-  function get_xyz(d) {
-    var bounds = path.bounds(d);
-    var w_scale = (bounds[1][0] - bounds[0][0]) / width;
-    var h_scale = (bounds[1][1] - bounds[0][1]) / height;
-    var z = .96 / Math.max(w_scale, h_scale);
-    var x = (bounds[1][0] + bounds[0][0]) / 2;
-    var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 6);
-    return [x, y, z];
-  }
-
-  function country_clicked(d) {
-    g.selectAll(["#states", "#cities"]).remove();
-    state = null;
-    if (country) {
-      g.selectAll("#" + country.id).style('display', null);
-    }
-    if (d && country !== d) {
-      var xyz = get_xyz(d);
-      country = d;
-      zoom(xyz);
-    } else {
-      var xyz = [width / 2, height / 1.5, 1];
-      country = null;
-      zoom(xyz);
-    }
-  }
-
-  $(window).resize(function() {
-    var w = $("#map").width();
-    svg.attr("width", w);
-    svg.attr("height", w * height / width);
-  });
-</script>
-
-</div>
 <a href="#compare-me" class="category-button smoothScroll">back to top</a>
+
 </div>
 <br><br>
