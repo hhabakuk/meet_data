@@ -11,7 +11,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
   $('.bar-chart').append('<canvas id="bar-chart" width="400" height="400"><canvas>');
 
   $('#pie-chart').remove();
-  $('.pie-chart').append('<canvas id="pie-chart" width="400" height="400"><canvas>');
+  $('.pie-chart').append('<canvas id="pie-chart" width="300" height="300"><canvas>');
 
   $('#radar-chart').remove();
   $('.radar-chart').append('<canvas id="radar-chart" width="600" height="600"><canvas>');
@@ -124,14 +124,6 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
   // drawing the pie chart
 
-  var ctxPie = $("#pie-chart").get(0).getContext("2d");
-  // var ctxPie = document.getElementById("pie-chart").getContext("2d");
-
-  var dataPie = [];
-
-  for (var i = 0; i < 10; i += 1) {
-
-    dataPie.push({ value: pieDataSorted[i].pieValue, color: "#5AD3D1", highlight: "#FFBF69", label: pieDataSorted[i].pieLabel });
 
 
     // get the pie chart data for top city
@@ -149,6 +141,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
      pieDataSorted = pieData.sort(function(a, b) {
        return parseFloat(b.pieValue) - parseFloat(a.pieValue);
      });
+
 
     // DRAW THE PIE CHART //
     var ctxPie = $("#pie-chart").get(0).getContext("2d");
@@ -217,4 +210,4 @@ $('.categories-buttons').on('click', '.category-button', function() {
   });
 });
 
-);
+
