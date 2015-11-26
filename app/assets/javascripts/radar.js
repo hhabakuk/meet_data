@@ -2,7 +2,12 @@
 $('.comparison-buttons').on('click','.compare-button',function() {
   // clear chart
   $('#radar-chart').remove();
-  $('.radar-chart').append('<canvas id="radar-chart" width="600" height="600"><canvas>');
+  $('.radar-chart').append('<canvas id="radar-chart" width="600" height="400"><canvas>');
+
+    $('#loading2').text('loading...');
+  $(document).ajaxComplete(function() {
+    $('#loading2').remove();
+  });
 
   // store name of comparison city selected
   var selectedComparisonCity = $(this).text();
@@ -95,7 +100,9 @@ $('.comparison-buttons').on('click','.compare-button',function() {
       angleLineWidth : 1,
 
       //String - Point label font declaration
-      pointLabelFontFamily : "'Arial'",
+      pointLabelFontFamily : "Menlo",
+
+      tooltipFontFamily: "Menlo",
 
       //String - Point label font weight
       pointLabelFontStyle : "normal",

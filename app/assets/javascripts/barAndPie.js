@@ -3,21 +3,32 @@ var pieDataSorted = [] // global to be used by radar chart
 // when category is selected, display bar and pie chart
 $('.categories-buttons').on('click', '.category-button', function() {
 
+  $('#loading').text('loading...');
+  $(document).ajaxComplete(function() {
+    $('#loading').remove();
+  });
+
+
   $('.comparison-text').empty();
   $('.comparison-buttons').empty();
   $('#top-city').empty();
   $('#top-city-category-groups').empty();
   $('#top-city-all-groups').empty();
+  $('.go-to-map').empty();
+  $("#top-city-category-groups2").empty();
+
 
 
   $('#bar-chart').remove();
-  $('.bar-chart').append('<canvas id="bar-chart" width="400" height="400"><canvas>');
+  $('.bar-chart').append('<canvas id="bar-chart" width="300" height="300"><canvas>');
 
   $('#pie-chart').remove();
-  $('.pie-chart').append('<canvas id="pie-chart" width="300" height="300"><canvas>');
+  $('.pie-chart').append('<canvas id="pie-chart" width="400" height="200"><canvas>');
 
   $('#radar-chart').remove();
-  $('.radar-chart').append('<canvas id="radar-chart" width="600" height="600"><canvas>');
+  $('.radar-chart').append('<canvas id="radar-chart" width="400" height="400"><canvas>');
+
+
 
   // store name of category selected
   var selectedCategory = $(this).text();
@@ -39,6 +50,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
   };
 
   $.ajax(options).done(function(data) {
+
+
 
     // get bar chart data for selected category
     _.each(data, function(group) {
@@ -85,6 +98,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
     };
 
     var optionsBar = {
+      scaleFontFamily : "Menlo",
+      tooltipFontFamily: "Menlo",
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero : true,
 
@@ -153,6 +168,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
     console.log(dataPie);
 
     var optionsPie = {
+      tooltipFontFamily: "Menlo",
+
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke : true,
 
@@ -245,17 +262,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
 
     var topCityCategoryGroups = activeBars[0].value;
-    $("#top-city-category-groups").html('There are ' + topCityCategoryGroups + ' groups for ' + selectedCategory);
-
-    // display the number of all groups in the top city
-    var topCityAllGroups = 0
-
-    for (var i = 0; i < pieDataSorted.length; i += 1) {
-      
-      topCityAllGroups += pieDataSorted[i].pieValue << 0; 
-    };
-
-     $("#top-city-all-groups").html('and ' + topCityAllGroups + ' other groups to join');
+        $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')  
+    $("#top-city-category-groups2").text('to discuss ' + selectedCategory);
 
   });
   //////////////
@@ -268,17 +276,20 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
     var topCityCategoryGroups = barDataSorted[0].group_count;
 
-    $("#top-city-category-groups").text('There are ' + topCityCategoryGroups + ' groups for ' + selectedCategory);
+    $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')  
+    $("#top-city-category-groups2").text('to discuss ' + selectedCategory);
 
     // display the number of all groups in the top city
     var topCityAllGroups = 0
 
-    for (var i = 0; i < pieDataSorted.length; i += 1) {
+    // for (var i = 0; i < pieDataSorted.length; i += 1) {
       
-      topCityAllGroups += pieDataSorted[i].pieValue << 0; 
-    };
+    //   topCityAllGroups += pieDataSorted[i].pieValue << 0; 
+    // };
 
-     $("#top-city-all-groups").append('and ' + topCityAllGroups + ' other groups to join');
+    //  $("#top-city-all-groups").append('and ' + topCityAllGroups + ' other groups to join');
+
+
 
 
     // DISPLAY COMPARISON BUTTONS //
@@ -286,11 +297,17 @@ $('.categories-buttons').on('click', '.category-button', function() {
     var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + barDataSorted[0].name + ' with:');
     $newCompareText.appendTo('.comparison-text');
 
+    var $goToMap = $('<a href="#to-map">').addClass('compare-button smoothScroll').text("check out the world");
+    $goToMap.appendTo('.go-to-map');
+
+
     // generate top 9 city buttons
     for (var i = 1; i < 10; i += 1) {
-      var $newCompareButton = $('<a href="#compare">').addClass('compare-button').attr('data-city-id', barDataSorted[i].city_id).text(barDataSorted[i].name);
+      var $newCompareButton = $('<a href="#compare">').addClass('compare-button smoothScroll').attr('data-city-id', barDataSorted[i].city_id).text(barDataSorted[i].name);
       $newCompareButton.appendTo('.comparison-buttons');
     };
+    jQuery(function($){ $.localScroll({filter:'.smoothScroll'}); });
+
 
   });
 });

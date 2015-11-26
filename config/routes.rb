@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   # map page
   get '/map' => 'pages#map'
 
+
+
   resources :pages
 
 end

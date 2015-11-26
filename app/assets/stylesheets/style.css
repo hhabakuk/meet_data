@@ -17,22 +17,9 @@ body {
     size: 88%;
 }
 
-header {
 
-  text-align: center; 
-}
 
-.footer {
-  padding-left: 10%;
-}
 
-.greetings {
-  width: 100%;
-  padding-left: 5%;
-  padding-right: 5%;
-  border: solid #808080 bold;
-  border-radius: 10px;
-}
 
 .content_wrapper {
   width: 100%;
@@ -52,7 +39,25 @@ header {
 }
 
 
+.first-container {
+  height: 100vh;
 
+}
+
+.second-container {
+    width: 100%;
+    text-align: center;
+    height: 100vh;
+}
+.third-container {
+    width: 100%;
+    text-align: center;
+    height: 100vh;
+}
+
+#pick-one {
+  padding-top: 2em;
+}
 .category-button {
   font-family: Menlo, regular;
   color: #000000;
@@ -81,8 +86,9 @@ header {
 .bar-pie-charts {
     display: flex;
     justify-content: space-around;
-    margin: 3em;
+    margin: 3em 3em  0px 3em;
     vertical-align: middle;
+    
     
 
 }
@@ -92,10 +98,7 @@ header {
 
 }
 
-.second-container {
-    width: 100%;
-    text-align: center;
-}
+
 
 
 .comparison {
@@ -141,4 +144,32 @@ header {
   background-color:#fffd6a;
   outline: 0;
 }
+
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url(images/loader-64x/Preloader_2.gif) center no-repeat #fff;
+}
+#loading {
+  padding-top: 170px;
+}
+
+#loading2 {
+  padding-top: 170px;
+}
+
+.start {
+  padding: 300px 300px 0px 300px  ;
+}
+
+#letsgo {
+  margin-top: 50px;
+}
+
 

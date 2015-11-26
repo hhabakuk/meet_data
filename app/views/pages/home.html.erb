@@ -1,17 +1,27 @@
-<header>
-  <h1 class="index">Let's figure out where you should live</h1>
-
-  <h1 class="index_about">Pick one thing you're most interested in:</h1>
-</header>
-
-
-
 <div class="first-container">
+  <div class="start">
+  <h1>There are over 2M cities in the world</h1>
+  <h4>Come and see which one is right for you</h4>
+    
+  </div >
+  <div id="letsgo">
+  <a href="#compare-me" class="category-button smoothScroll" >Let's go</a>
+    
+  </div>
+</div>
+
+
+
+
+  <div id="compare-me"class="second-container">
+  <h1 id="pick-one">Pick one thing you're most interested in:</h1>
   <div class="categories-buttons">
 
   </div>
+  <h3 id="loading"></h3>
 
   <div class="bar-pie-charts">
+
     <div class="bar-chart">
       <canvas id="bar-chart" width="400" height="400"></canvas>
 
@@ -21,32 +31,42 @@
       <canvas id="pie-chart" width="300" height="300"></canvas>
       <div>
       <h1 id="top-city"></h1>
-      <h2 id="top-city-category-groups"></h2>
-      <h2 id="top-city-all-groups"></h2>
+      <p id="top-city-category-groups"></p>
+      <p id="top-city-category-groups2"></p>
         
       </div>
     </div>
   </div>
-</div>
-
-<div id="compare"class="second-container">
+<div id="compare">
   <div class="comparison">
     <div class="comparison-text">
-
+      
     </div>
     <div class="comparison-buttons">
 
     </div>
-  </div>
-
-  <div class="radar-chart">
-    <canvas id="radar-chart" width="600" height="600"></canvas>
+   
   </div>
 </div>
+</div>
+
+
+
+
+
+
 
 <div class="third-container">
+    <h3 id="loading2"></h3>
+  <div class="radar-chart">
+    <canvas id="radar-chart"></canvas>
+  </div>
+  <br><br><br>
+   <div class ="go-to-map"></div>
+</div>
+
   <h1>come into my spacerocket</h1>
-  <div class="map">
+  <div id="to-map" class="map">
   <style>
   #map {
     background-color: transparent;
@@ -81,9 +101,12 @@
 
 <div id="map"></div>
 
+
+
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
 <script>
+
   var m_width = $("#map").width(),
     width = 938,
     height = 500,
@@ -187,4 +210,6 @@
 </script>
 
 </div>
+<a href="#compare-me" class="category-button smoothScroll">back to top</a>
 </div>
+<br><br>
