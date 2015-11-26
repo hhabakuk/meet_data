@@ -1,4 +1,5 @@
 var pieDataSorted = [] // global to be used by radar chart
+var groupData = 0
 
 // when category is selected, display bar and pie chart
 $('.categories-buttons').on('click', '.category-button', function() {
@@ -31,6 +32,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
   var pieValues = []; // values of the pieslices
   var pieLabel = []; // name of the pieslices
 
+
   // GET call to database
   var options = {
     type: "GET",
@@ -39,6 +41,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
   };
 
   $.ajax(options).done(function(data) {
+
+    groupData = data;
 
     // get bar chart data for selected category
     _.each(data, function(group) {
@@ -149,8 +153,14 @@ $('.categories-buttons').on('click', '.category-button', function() {
     // DRAW THE PIE CHART //
     var ctxPie = $("#pie-chart").get(0).getContext("2d");
 
+    // pie percentage
+    var piePercentage = 0;
 
-    console.log(dataPie);
+    for (var i = 0; i < pieDataSorted.length; i += 1) {
+      piePercentage += pieDataSorted[i].pieValue;
+    };
+
+
 
     var optionsPie = {
       //Boolean - Whether we should show a stroke on each segment
@@ -177,6 +187,29 @@ $('.categories-buttons').on('click', '.category-button', function() {
       //Boolean - Whether we animate scaling the Doughnut from the centre
       animateScale : false,
 
+      onAnimationComplete: function () {
+
+        //setup the font and center it's position
+        this.chart.ctx.font = 'Normal 24px Menlo';
+        this.chart.ctx.fillStyle = '#000';
+        this.chart.ctx.textAlign = 'center';
+        this.chart.ctx.textBaseline = 'middle';
+
+        //put the pabel together based on the given 'skilled' percentage
+        var valueLabel = ((barDataSorted[0].group_count / piePercentage) * 100).toFixed(2) + '%';
+
+        //find the center point
+        var x = this.chart.canvas.clientWidth / 2;
+        var y = this.chart.canvas.clientHeight / 2;
+
+        //hack to center different fonts
+        var x_fix = 0;
+        var y_fix = 2;
+
+        //render the text
+        this.chart.ctx.fillText(valueLabel, x + x_fix, y + y_fix);
+      },
+
 
       //String - A legend template
       legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%%=segments[i].fillColor%>\"></span><%%if(segments[i].label){%><%%=segments[i].label%><%%}%></li><%%}%></ul>"
@@ -191,8 +224,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
       dataPie.push({
         value: pieDataSorted[i].pieValue,
-        color: "#FFFD6A",
-        highlight: "#5AD3D1",
+        color: "#00ADB3",
+        highlight: "#ef4b5d",
         label: pieDataSorted[i].pieLabel
       });
 
@@ -200,14 +233,14 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
       if (pieDataSorted[i].pieLabel === selectedCategory) {
         console.log('label: ' , pieDataSorted[i].pieLabel, 'cat: ', selectedCategory);
-        dataPie[i].color = '#5AD3D1';
+        dataPie[i].color = '#ef4b5d';
 
 
       };
     };
 
 
-     
+
     // create new pie chart
     var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
 
@@ -233,12 +266,12 @@ $('.categories-buttons').on('click', '.category-button', function() {
        });
        //update the value in piechart
       for (var i = 0; i < 33; i += 1) {
-        pieChart.segments[i].value = pieDataSorted[i].pieValue; 
+        pieChart.segments[i].value = pieDataSorted[i].pieValue;
         pieChart.segments[i].label = pieDataSorted[i].pieLabel;
-      }; 
+      };
      // Calling update now animates the circumference ,and transitions other segment widths
         pieChart.update();
-      
+
     $("#top-city").html(cityNameOnBar);
     $('.compare-text').html('Compare ' + cityNameOnBar + ' with:');
 
@@ -251,13 +284,13 @@ $('.categories-buttons').on('click', '.category-button', function() {
     var topCityAllGroups = 0
 
     for (var i = 0; i < pieDataSorted.length; i += 1) {
-      
-      topCityAllGroups += pieDataSorted[i].pieValue << 0; 
+
+      topCityAllGroups += pieDataSorted[i].pieValue << 0;
     };
 
      $("#top-city-all-groups").html('and ' + topCityAllGroups + ' other groups to join');
-
   });
+
   //////////////
 
 
@@ -274,15 +307,15 @@ $('.categories-buttons').on('click', '.category-button', function() {
     var topCityAllGroups = 0
 
     for (var i = 0; i < pieDataSorted.length; i += 1) {
-      
-      topCityAllGroups += pieDataSorted[i].pieValue << 0; 
+
+      topCityAllGroups += pieDataSorted[i].pieValue << 0;
     };
 
      $("#top-city-all-groups").append('and ' + topCityAllGroups + ' other groups to join');
 
 
     // DISPLAY COMPARISON BUTTONS //
-  
+
     var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + barDataSorted[0].name + ' with:');
     $newCompareText.appendTo('.comparison-text');
 
@@ -294,5 +327,3 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
   });
 });
-
-
