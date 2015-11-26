@@ -82,6 +82,13 @@ header {
     display: flex;
     justify-content: space-around;
     margin: 3em;
+    vertical-align: middle;
+    
+
+}
+
+.bar-chart {
+  padding-top: 4  0px;
 
 }
 

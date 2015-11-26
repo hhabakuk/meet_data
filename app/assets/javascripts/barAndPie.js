@@ -65,7 +65,6 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
     topCity = barLabel[0];
 
-
     console.log(barLabel);
     console.log(barValues);
     console.log(topCity);
@@ -245,7 +244,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
 
 
-    var topCityCategoryGroups = pieDataSorted[0].pieValue;
+    var topCityCategoryGroups = activeBars[0].value;
     $("#top-city-category-groups").html('There are ' + topCityCategoryGroups + ' groups for ' + selectedCategory);
 
     // display the number of all groups in the top city
@@ -267,7 +266,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
     // display the number of groups in the selected category in top city
 
-    var topCityCategoryGroups = barValues[0];
+    var topCityCategoryGroups = barDataSorted[0].group_count;
+
     $("#top-city-category-groups").text('There are ' + topCityCategoryGroups + ' groups for ' + selectedCategory);
 
     // display the number of all groups in the top city
