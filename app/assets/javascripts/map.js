@@ -40,36 +40,40 @@ d3.json("/map/countries.topo.json", function(error, us) {
     .on("click", country_clicked);
 });
 
-d3.csv("map/cities.csv", function(error, data) {
-  g.selectAll("circle")
-    .data(data)
-    .enter()
-    .append("a")
-      .attr("xlink:href", function(d) {
-        return "http://www.meetup.com/cities/"+d.country+"/"+d.city;
-      })
-    .append("circle") // display dot for each city
-      .attr("cx", function(d) {
-        return projection([d.lon, d.lat])[0];
-      })
-      .attr("cy", function(d) {
-        return projection([d.lon, d.lat])[1];
-      })
-      .attr("r", 2)
-      .style("fill", "#ef4b5d");
+setTimeout(function() {
+  d3.csv("map/cities.csv", function(error, data) {
+    g.selectAll("circle")
+      .data(data)
+      .enter()
+      .append("a")
+        .attr("xlink:href", function(d) {
+          return "http://www.meetup.com/cities/"+d.country+"/"+d.city;
+        })
+      .append("circle") // display dot for each city
+        .attr("cx", function(d) {
+          return projection([d.lon, d.lat])[0];
+        })
+        .attr("cy", function(d) {
+          return projection([d.lon, d.lat])[1];
+        })
+        .attr("r", 2)
+        .style("fill", "#ef4b5d");
 
-  // show city name on hover
-  g.selectAll("circle")
-    .on("mousemove", function(d,i) {
-      tooltip
-        .classed("hidden", false)
-        .attr("style", "left:"+(d3.event.pageX+25)+"px;top:"+(d3.event.pageY-25)+"px")
-        .html(d.city);
-      })
-    .on("mouseout", function(d,i) {
-      tooltip.classed("hidden", true);
+    // show city name on hover
+    g.selectAll("circle")
+      .on("mouseover", function(d,i) {
+        tooltip
+          .attr("style", "display:block")
+          .attr("style", "left:"+(d3.event.pageX+25)+"px;top:"+(d3.event.pageY-25)+"px")
+          .html(d.city);
+        })
+      .on("mouseout", function(d,i) {
+        tooltip
+          .attr("style", "display:none")
+      });
     });
-  });
+}, 2000);
+
 
 
 // var top3 = [];

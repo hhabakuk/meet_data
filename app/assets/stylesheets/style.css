@@ -180,7 +180,7 @@ body {
   pointer-events: all;
 }
 #countries, #states {
-  fill: #00adb3;
+  fill: #F9C924;
   stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -201,12 +201,12 @@ pre.prettyprint {
   padding: 9.5px;
 }
 div.tooltip {
-  color: #222;
-  background: #fff;
+  color: white;
+  background: #ef4b5d;
   padding: .5em;
-  text-shadow: #f5f5f5 0 1px 0;
+  text-shadow: #ef4b5d 0 1px 0;
   border-radius: 2px;
-  box-shadow: 0px 0px 2px 0px #a6a6a6;
+  box-shadow: 0px 0px 2px 0px #ef4b5d;
   opacity: 0.9;
   position: absolute;
 }

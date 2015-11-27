@@ -4,12 +4,13 @@ var groupData = 0
 // when category is selected, display bar and pie chart
 $('.categories-buttons').on('click', '.category-button', function() {
 
+  // display loading until data has been retrieved
   $('#loading').text('loading...');
   $(document).ajaxComplete(function() {
-    $('#loading').remove();
+    $('#loading').attr("style", "display:none");
   });
 
-
+  // clear values when another category is selected
   $('.comparison-text').empty();
   $('.comparison-buttons').empty();
   $('#top-city').empty();
@@ -18,8 +19,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
   $('.go-to-map').empty();
   $("#top-city-category-groups2").empty();
 
-
-
+  // clear charts when another category is selected
   $('#bar-chart').remove();
   $('.bar-chart').append('<canvas id="bar-chart" width="300" height="300"><canvas>');
 
@@ -29,11 +29,9 @@ $('.categories-buttons').on('click', '.category-button', function() {
   $('#radar-chart').remove();
   $('.radar-chart').append('<canvas id="radar-chart" width="400" height="400"><canvas>');
 
-
-
   // store name of category selected
   var selectedCategory = $(this).text();
-  console.log(selectedCategory)
+  console.log(selectedCategory);
 
   var barLabel = []; // names of the columns in barchart
   var barValues = []; // values of the columns in barchart
@@ -42,7 +40,6 @@ $('.categories-buttons').on('click', '.category-button', function() {
   var pieData = []; // array of objects, pieLabel: group.category_name, pieValue: group.group_count
   var pieValues = []; // values of the pieslices
   var pieLabel = []; // name of the pieslices
-
 
   // GET call to database
   var options = {
@@ -53,9 +50,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
   $.ajax(options).done(function(data) {
 
-
     groupData = data;
-
 
     // get bar chart data for selected category
     _.each(data, function(group) {
@@ -138,44 +133,36 @@ $('.categories-buttons').on('click', '.category-button', function() {
       legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%%=datasets[i].fillColor%>\"></span><%%if(datasets[i].label){%><%%=datasets[i].label%><%%}%></li><%%}%></ul>"
     };
 
-
-
     // create new bar chart
-  var barChart = new Chart(ctxBar).Bar(dataBar, optionsBar);
-
-
-  // drawing the pie chart
-
-
+    var barChart = new Chart(ctxBar).Bar(dataBar, optionsBar);
 
     // get the pie chart data for top city
-     _.each(data, function(group) {
-       if (group.city_name === topCity) {
-         pieData.push({
-           pieLabel: group.category_name,
-           pieValue: group.group_count
-         });
-       };
-     });
-     console.log(pieData);
+    _.each(data, function(group) {
+      if (group.city_name === topCity) {
+        pieData.push({
+          pieLabel: group.category_name,
+          pieValue: group.group_count
+        });
+      };
+    });
+    console.log(pieData);
 
-     // sort most popular groups in top city
-     pieDataSorted = pieData.sort(function(a, b) {
-       return parseFloat(b.pieValue) - parseFloat(a.pieValue);
-     });
-
+    // sort most popular groups in top city
+    pieDataSorted = pieData.sort(function(a, b) {
+      return parseFloat(b.pieValue) - parseFloat(a.pieValue);
+    });
 
     // DRAW THE PIE CHART //
     var ctxPie = $("#pie-chart").get(0).getContext("2d");
 
-    // pie percentage
-    var piePercentage = 0;
-
+    // calculate pie percentage
+    var totalPie = 0;
     for (var i = 0; i < pieDataSorted.length; i += 1) {
-      piePercentage += pieDataSorted[i].pieValue;
+      totalPie += pieDataSorted[i].pieValue;
     };
 
-
+    var piePercentage = 0;
+    piePercentage = ((barDataSorted[0].group_count / totalPie) * 100).toFixed(2) + '%';
 
     var optionsPie = {
       tooltipFontFamily: "Menlo",
@@ -207,13 +194,10 @@ $('.categories-buttons').on('click', '.category-button', function() {
       onAnimationComplete: function () {
 
         //setup the font and center it's position
-        this.chart.ctx.font = 'Normal 24px Menlo';
-        this.chart.ctx.fillStyle = '#000';
+        this.chart.ctx.font = 'Normal 14px Menlo';
+        this.chart.ctx.fillStyle = '#808080';
         this.chart.ctx.textAlign = 'center';
         this.chart.ctx.textBaseline = 'middle';
-
-        //put the pabel together based on the given 'skilled' percentage
-        var valueLabel = ((barDataSorted[0].group_count / piePercentage) * 100).toFixed(2) + '%';
 
         //find the center point
         var x = this.chart.canvas.clientWidth / 2;
@@ -224,21 +208,17 @@ $('.categories-buttons').on('click', '.category-button', function() {
         var y_fix = 2;
 
         //render the text
-        this.chart.ctx.fillText(valueLabel, x + x_fix, y + y_fix);
+        this.chart.ctx.fillText(piePercentage, x + x_fix, y + y_fix);
       },
-
 
       //String - A legend template
       legendTemplate : "<ul class=\"<%%=name.toLowerCase()%>-legend\"><%% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%%=segments[i].fillColor%>\"></span><%%if(segments[i].label){%><%%=segments[i].label%><%%}%></li><%%}%></ul>"
-
-
     };
 
     var dataPie = [];
 
-
+    // get pie data
     for (var i = 0; i < 33; i += 1) {
-
       dataPie.push({
         value: pieDataSorted[i].pieValue,
         color: "#00ADB3",
@@ -247,16 +227,11 @@ $('.categories-buttons').on('click', '.category-button', function() {
       });
 
       // highlight the selected category
-
       if (pieDataSorted[i].pieLabel === selectedCategory) {
         console.log('label: ' , pieDataSorted[i].pieLabel, 'cat: ', selectedCategory);
         dataPie[i].color = '#ef4b5d';
-
-
       };
     };
-
-
 
     // create new pie chart
     var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
@@ -264,11 +239,11 @@ $('.categories-buttons').on('click', '.category-button', function() {
     ///////////////////
   //customize the pie chart interms of the cities on clicked
 //get the city name on clicked bar
-  $('.bar-chart').on('click',function(evt){
-     var activeBars = barChart.getBarsAtEvent(evt);
-    // => activeBars is an array of bars on the canvas that are at the same position as the click event.
-     var cityNameOnBar = activeBars[0].label;
-     //get the data with the clicked city name
+    $('.bar-chart').on('click',function(evt){
+      var activeBars = barChart.getBarsAtEvent(evt);
+      // => activeBars is an array of bars on the canvas that are at the same position as the click event.
+      var cityNameOnBar = activeBars[0].label;
+      //get the data with the clicked city name
       pieData = [];
       _.each(data, function(group) {
         if (group.city_name === cityNameOnBar) {
@@ -280,36 +255,53 @@ $('.categories-buttons').on('click', '.category-button', function() {
       //sort the dataset befor displaying on chart
       pieDataSorted = pieData.sort(function(a, b) {
         return parseFloat(b.pieValue) - parseFloat(a.pieValue);
-       });
-       //update the value in piechart
+      });
+      //update the value in piechart
       for (var i = 0; i < 33; i += 1) {
         pieChart.segments[i].value = pieDataSorted[i].pieValue;
         pieChart.segments[i].label = pieDataSorted[i].pieLabel;
       };
      // Calling update now animates the circumference ,and transitions other segment widths
-        pieChart.update();
+      pieChart.update();
 
-    $("#top-city").html(cityNameOnBar);
-    $('.compare-text').html('Compare ' + cityNameOnBar + ' with:');
+      $("#top-city").html(cityNameOnBar);
+      $('.compare-text').html('Compare ' + cityNameOnBar + ' with:');
 
+      // update city information
+      var topCityCategoryGroups = activeBars[0].value;
 
+      $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')
+      $("#top-city-category-groups2").text('to discuss ' + selectedCategory);
 
-    var topCityCategoryGroups = activeBars[0].value;
+      totalPie = 0;
+      for (var i = 0; i < pieDataSorted.length; i += 1) {
+        totalPie += pieDataSorted[i].pieValue;
+      };
 
-        $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')
-    $("#top-city-category-groups2").text('to discuss ' + selectedCategory);
+      piePercentage = 0;
+      piePercentage = ((topCityCategoryGroups / totalPie) * 100).toFixed(2) + '%';
 
+      // render comparison buttons
+      $('.compare-button').remove();
 
-  });
+      // update compare city name
+      $('.compare-text').text('Compare ' + cityNameOnBar + ' with:');
 
-  //////////////
+      // generate top 9 city buttons
+      for (var i = 0; i < 10; i += 1) {
+        if (barDataSorted[i].name !== cityNameOnBar) {
+          var $newCompareButton = $('<a href="#compare">').addClass('compare-button smoothScroll').text(barDataSorted[i].name);
 
+          $newCompareButton.appendTo('.comparison-buttons');
+        };
+      };
+
+    });
 
     // display the top city below the pie chart
     $("#top-city").append(topCity);
 
     // display the number of groups in the selected category in top city
-
     var topCityCategoryGroups = barDataSorted[0].group_count;
 
     $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')
@@ -344,6 +336,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
     };
     jQuery(function($){ $.localScroll({filter:'.smoothScroll'}); });
 
-
   });
+
+  $('#loading').attr("style", "display:block");
 });
