@@ -6,7 +6,7 @@ $('.comparison-buttons').on('click','.compare-button',function() {
 
     $('#loading2').text('loading...');
   $(document).ajaxComplete(function() {
-    $('#loading2').remove();
+    $('#loading2').attr("style", "display:none");
   });
 
   // store name of comparison city selected
@@ -143,4 +143,6 @@ $('.comparison-buttons').on('click','.compare-button',function() {
     var radarChart = new Chart(ctx).Radar(dataRadar, optionsRadar);
 
   });
+
+  $('#loading2').attr("style", "display:block");
 });
