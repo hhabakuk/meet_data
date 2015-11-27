@@ -12,6 +12,7 @@ Where To allows users understand and visualise the culture of cities around the 
   - [D3.js](http://d3js.org/)
   - jQuery
   - Ajax
+  - Underscore
 3. Meetup API
 4. PostgreSQL
 5. HTML5
@@ -20,9 +21,9 @@ Where To allows users understand and visualise the culture of cities around the 
 
 ## Key features
 
-- Users select a category they are interested in and are shown a bar chart with the top 10 cities for which there are groups relevant to that category
-- Users are shown a doughnut chart displaying the proportion of groups in the selected category compared to total groups (the chart also displays the slice-up of each of the 33 categories in that city)
-- Users can compare city culture information with another city
+- Bar chart - top 10 cities for which there are groups relevant to the category selected by a user
+- Doughnut chart – all groups in the city selected
+- Radar chart – compare city culture information with another city
 - Users can select a city on the map and be directed to the relevant city's Meetup.com page
 
 ## Features to be added
@@ -31,21 +32,75 @@ Where To allows users understand and visualise the culture of cities around the 
 
 ## Links
 
-Check out the site - [https://[SOMETHING].herokuapp.com/](https://[SOMETHING].herokuapp.com/)
+Check out the site - [https://wheretonow.herokuapp.com/](https://wheretonow.herokuapp.com/)
 
 ## Approach / design notes
 
-#### Planning
-
-Wireframe:
-
-Wireframe:
+###### Wireframe:
 
 ![Image of Wireframe](https://files.slack.com/files-pri/T0351JZQ0-F0FBLJN8K/pasted_image_at_2015_11_27_01_06_am.png?pub_secret=367ac51341)
 
-Database tables:
+###### Database tables:
 
 ![Image of Database tables](https://files.slack.com/files-pri/T0351JZQ0-F0FBP0RHU/where_to.png?pub_secret=09a6c11088)
+
+###### Presentation:
+
+Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](http://www.slideshare.net/secret/M4COPzZVXewSe8)
+
+## Installation
+
+##### Option 1 - use existing seed data (last updated 26 November 2015)
+
+1. Fork this repository
+2. Create a local clone
+3. Run the code below in your Terminal to set up you database
+
+  ```
+  rake db:create
+  rake db:migrate
+  rake db:seed
+  ```
+
+##### Option 2 - get updated data using the Meetup API
+
+1. Fork this repository
+2. Create a local clone
+3. Run the code below in your Terminal to set up you database
+
+  ```
+  rake db:create
+  rake db:migrate
+  ```
+
+4. Get an API key [here](https://secure.meetup.com/meetup_api/key/)
+5. Create a new file called `.env` in the root folder
+6. Add the code below to your new .env file
+
+  ```ruby
+  MEETUP_KEY=YOURAPIKEYFROMMEETUP
+  ```
+
+7. Add the code below to your Gemfile
+
+  ```ruby
+  gem 'dotenv-rails', :groups => [:development, :test]
+  ```
+
+8. Bundle the Gemfile in your terminal - `bundle`
+9. Replace the code in the db/seeds.rb file with the code below
+
+  ```ruby
+  Category.init_categories
+  City.init_cities
+  Groups.init_groups
+  ```
+
+10. Run the code below in your Terminal to seed data into your database (note: this may take up to 45mins depending on your connection / the Meetup API)
+
+  ```
+  rake db:seed
+  ```
 
 ## Acknowledgements
 
