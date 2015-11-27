@@ -18,5 +18,6 @@
 //= require categoryButtons
 //= require barAndPie
 //= require radar
-
-
+//= require d3.min
+//= require topojson.v1.min
+//= require map
