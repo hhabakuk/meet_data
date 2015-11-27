@@ -61,3 +61,8 @@ group :development do
   # Rails Pry - by default, Rails uses IRB
   gem 'pry-rails'
 end
+
+
+group :production do 
+  gem 'rails_12factor'
+end
