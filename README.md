@@ -36,17 +36,17 @@ Check out the site - [https://wheretonow.herokuapp.com/](https://wheretonow.hero
 
 ## Approach / design notes
 
-###### Wireframe:
+##### Wireframe:
 
 ![Image of Wireframe](https://files.slack.com/files-pri/T0351JZQ0-F0FBLJN8K/pasted_image_at_2015_11_27_01_06_am.png?pub_secret=367ac51341)
 
-###### Database tables:
+##### Database tables:
 
 ![Image of Database tables](https://files.slack.com/files-pri/T0351JZQ0-F0FBP0RHU/where_to.png?pub_secret=09a6c11088)
 
-###### Presentation:
+##### Presentation:
 
-Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](http://www.slideshare.net/secret/M4COPzZVXewSe8)
+Link to presentation slides - [https://drive.google.com/file/d/0B9k7U6zZJvC7a1Q5NlFFME9nUHM/view?usp=sharing](https://drive.google.com/file/d/0B9k7U6zZJvC7a1Q5NlFFME9nUHM/view?usp=sharing)
 
 ## Installation
 
