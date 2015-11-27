@@ -54,7 +54,7 @@ Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](
 
 1. Fork this repository
 2. Create a local clone
-3. Run the code below in your Terminal to set up you database
+3. Run the code below in your Terminal to set up your database
 
   ```
   rake db:create
@@ -66,7 +66,7 @@ Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](
 
 1. Fork this repository
 2. Create a local clone
-3. Run the code below in your Terminal to set up you database
+3. Run the code below in your Terminal to set up your database
 
   ```
   rake db:create
@@ -96,7 +96,7 @@ Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](
   Groups.init_groups
   ```
 
-10. Run the code below in your Terminal to seed data into your database (note: this may take up to 45mins depending on your connection / the Meetup API)
+10. Run the code below in your Terminal to seed data into your database (note: this may take up to 45 minutes depending on your connection / the Meetup API)
 
   ```
   rake db:seed
@@ -104,7 +104,7 @@ Link to presentation slides - [http://www.slideshare.net/secret/M4COPzZVXewSe8](
 
 ## Acknowledgements
 
-##### Group members
+##### Team members
 
 - [Helen](https://github.com/hhabakuk)
 - [Bono](https://github.com/bonogit)
