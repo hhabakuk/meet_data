@@ -2,7 +2,7 @@
 
 ## Overview
 
-Where To Now allows users understand and visualise the culture of cities around the world. The data gathered from the Meetup API has been used to determine the relative importance of each of the 33 categories, based on the number of groups in each city. This provides users with meaningful information regarding the cities they are most likely to find people with a common interest.
+Where To Now allows users to understand and visualise the culture of cities around the world. The data gathered from the Meetup API has been used to determine the relative importance of each of the 33 categories, based on the number of groups in each city. This provides users with meaningful information regarding the cities they are most likely to find people with a common interest.
 
 ## Technologies used
 
