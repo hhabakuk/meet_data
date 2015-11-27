@@ -1,5 +1,5 @@
 var options = {
-  url: 'http://localhost:3000/api/categories',
+  url: '/api/categories',
   type: 'get',
   dataType: 'json'
 };
