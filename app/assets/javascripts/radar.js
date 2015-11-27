@@ -61,8 +61,9 @@ $('.comparison-buttons').on('click','.compare-button',function() {
       labels: radarLabel,
       datasets: [{
         label: "City1 name dataset",
-        fillColor: "rgba(220,220,220,0.2)",
-        strokeColor: "rgba(220,220,220,1)",
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(255, 64, 104,0.3)",
+        
         pointColor: "rgba(220,220,220,1)",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
@@ -70,8 +71,8 @@ $('.comparison-buttons').on('click','.compare-button',function() {
         data: radarCompareCityData
       }, {
         label: "City2 name dataset",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(100, 212, 249,0.4)",
         pointColor: "rgba(151,187,205,1)",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",

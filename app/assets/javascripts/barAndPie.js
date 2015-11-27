@@ -89,15 +89,16 @@ $('.categories-buttons').on('click', '.category-button', function() {
       labels: barLabel,
       datasets: [{
         label: "Most probable cities",
-        fillColor: "rgba(220,220,220,0.5)",
+        fillColor: "#ED7B84",
         strokeColor: "rgba(220,220,220,0.8)",
-        highlightFill: "rgba(220,220,220,0.75)",
+        highlightFill: "#84DCCF",
         highlightStroke: "rgba(220,220,220,1)",
         data: barValues
       }]
     };
 
     var optionsBar = {
+
       scaleFontFamily : "Menlo",
       tooltipFontFamily: "Menlo",
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
@@ -170,6 +171,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
     var optionsPie = {
       tooltipFontFamily: "Menlo",
 
+
+
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke : true,
 
@@ -208,7 +211,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
 
       dataPie.push({
         value: pieDataSorted[i].pieValue,
-        color: "#FFFD6A",
+        color: "#ffc596",
         highlight: "#5AD3D1",
         label: pieDataSorted[i].pieLabel
       });
@@ -297,7 +300,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
     var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + barDataSorted[0].name + ' with:');
     $newCompareText.appendTo('.comparison-text');
 
-    var $goToMap = $('<a href="#to-map">').addClass('compare-button smoothScroll').text("check out the world");
+    var $goToMap = $('<a href="#to-map">').addClass('letsgo-btn smoothScroll').text("check out the world");
     $goToMap.appendTo('.go-to-map');
 
 
