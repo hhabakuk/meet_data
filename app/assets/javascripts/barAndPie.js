@@ -44,7 +44,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
   // GET call to database
   var options = {
     type: "GET",
-    url: 'http://localhost:3000/api/groups',
+    url: '/api/groups',
     dataType: 'json'
   };
 
@@ -81,7 +81,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
     console.log(barValues);
     console.log(topCity);
 
-    // DRAW THE BAR CHART //
+    ///// DRAW THE BAR CHART /////
     var ctxBar = $("#bar-chart").get(0).getContext("2d");
 
     var dataBar = {
@@ -153,7 +153,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
       return parseFloat(b.pieValue) - parseFloat(a.pieValue);
     });
 
-    // DRAW THE PIE CHART //
+    ///// DRAW THE PIE CHART /////
     var ctxPie = $("#pie-chart").get(0).getContext("2d");
 
     // calculate pie percentage
@@ -166,9 +166,8 @@ $('.categories-buttons').on('click', '.category-button', function() {
     piePercentage = ((barDataSorted[0].group_count / totalPie) * 100).toFixed(2) + '%';
 
     var optionsPie = {
+
       tooltipFontFamily: "Menlo",
-
-
 
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke : true,
@@ -232,21 +231,21 @@ $('.categories-buttons').on('click', '.category-button', function() {
       // highlight the selected category
       if (pieDataSorted[i].pieLabel === selectedCategory) {
         console.log('label: ' , pieDataSorted[i].pieLabel, 'cat: ', selectedCategory);
-        dataPie[i].color = '#ef4b5d';
+        dataPie[i].color = '#5AD3D1';
       };
     };
 
     // create new pie chart
     var pieChart = new Chart(ctxPie).Pie(dataPie, optionsPie);
 
-    ///////////////////
-  //customize the pie chart interms of the cities on clicked
-//get the city name on clicked bar
+    //refresh pie chart on click of bar
     $('.bar-chart').on('click',function(evt){
       var activeBars = barChart.getBarsAtEvent(evt);
-      // => activeBars is an array of bars on the canvas that are at the same position as the click event.
+
+      // => activeBars is an array of bars on the canvas that are at the same position as the click event
       var cityNameOnBar = activeBars[0].label;
-      //get the data with the clicked city name
+      
+      // get the new pie data of the clicked city 
       pieData = [];
       _.each(data, function(group) {
         if (group.city_name === cityNameOnBar) {
@@ -255,16 +254,19 @@ $('.categories-buttons').on('click', '.category-button', function() {
          };
       });
       console.log(pieData);
-      //sort the dataset befor displaying on chart
+      
+      // sort the dataset before displaying on chart
       pieDataSorted = pieData.sort(function(a, b) {
         return parseFloat(b.pieValue) - parseFloat(a.pieValue);
       });
-      //update the value in piechart
+      
+      // update the segement values on the pie chart
       for (var i = 0; i < 33; i += 1) {
         pieChart.segments[i].value = pieDataSorted[i].pieValue;
         pieChart.segments[i].label = pieDataSorted[i].pieLabel;
       };
-     // Calling update now animates the circumference ,and transitions other segment widths
+
+      // Calling update now animates the circumference and transitions other segment widths
       pieChart.update();
 
       $("#top-city").html(cityNameOnBar);
@@ -276,11 +278,13 @@ $('.categories-buttons').on('click', '.category-button', function() {
       $("#top-city-category-groups").text('People like you have formed ' + topCityCategoryGroups + ' groups')
       $("#top-city-category-groups2").text('to discuss ' + selectedCategory);
 
+      // get the total group_count of the pie
       totalPie = 0;
       for (var i = 0; i < pieDataSorted.length; i += 1) {
         totalPie += pieDataSorted[i].pieValue;
       };
 
+      // update the percentage fill calculation
       piePercentage = 0;
       piePercentage = ((topCityCategoryGroups / totalPie) * 100).toFixed(2) + '%';
 
@@ -294,6 +298,7 @@ $('.categories-buttons').on('click', '.category-button', function() {
       for (var i = 0; i < 10; i += 1) {
         if (barDataSorted[i].name !== cityNameOnBar) {
           var $newCompareButton = $('<a href="#compare">').addClass('compare-button smoothScroll').text(barDataSorted[i].name);
+      
 
           $newCompareButton.appendTo('.comparison-buttons');
         };
@@ -313,22 +318,11 @@ $('.categories-buttons').on('click', '.category-button', function() {
     // display the number of all groups in the top city
     var topCityAllGroups = 0
 
-
-    // for (var i = 0; i < pieDataSorted.length; i += 1) {
-
-    //   topCityAllGroups += pieDataSorted[i].pieValue << 0;
-    // };
-
-    //  $("#top-city-all-groups").append('and ' + topCityAllGroups + ' other groups to join');
-
-
-
-    // DISPLAY COMPARISON BUTTONS //
-
+    ///// DISPLAY THE COMPARISON BUTTONS /////
     var $newCompareText = $('<h3>').addClass('compare-text').text('Compare ' + barDataSorted[0].name + ' with:');
     $newCompareText.appendTo('.comparison-text');
 
-    var $goToMap = $('<a href="#to-map">').addClass('letsgo-btn smoothScroll').text("check out the world");
+    var $goToMap = $('<a href="#to-map">').addClass('letsgo-btn smoothScroll').text("go to map");
     $goToMap.appendTo('.go-to-map');
 
 
@@ -337,9 +331,10 @@ $('.categories-buttons').on('click', '.category-button', function() {
       var $newCompareButton = $('<a href="#compare">').addClass('compare-button smoothScroll').attr('data-city-id', barDataSorted[i].city_id).text(barDataSorted[i].name);
       $newCompareButton.appendTo('.comparison-buttons');
     };
+
     jQuery(function($){ $.localScroll({filter:'.smoothScroll'}); });
-
   });
-
+  
+  // reactivate loading div
   $('#loading').attr("style", "display:block");
 });

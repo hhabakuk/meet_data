@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   belongs_to :city
 
   BASE_URL= "http://api.meetup.com"
-  API_KEY = "key=682973467622505a78213a1670961"
+  API_KEY = ENV['MEETUP_KEY']
 
   def self.init_groups
 
@@ -19,7 +19,7 @@ class Group < ActiveRecord::Base
         length = 200
 
         while length == 200
-          response = HTTParty.get(URI.escape("#{ BASE_URL }/find/groups?location=#{city.name.gsub(" ", "+")}&country=#{city.country}&category=#{category.meetup_id}&page=200&offset=#{offset}&only=name,members,category&#{ API_KEY }"))
+          response = HTTParty.get(URI.escape("#{ BASE_URL }/find/groups?location=#{city.name.gsub(" ", "+")}&country=#{city.country}&category=#{category.meetup_id}&page=200&offset=#{offset}&only=name,members,category&key=#{ API_KEY }"))
           length = response.length
           count += length
           offset += 1

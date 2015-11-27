@@ -56,8 +56,8 @@ setTimeout(function() {
         .attr("cy", function(d) {
           return projection([d.lon, d.lat])[1];
         })
-        .attr("r", 2)
-        .style("fill", "#ef4b5d");
+        .attr("r", 2.5)
+        .style("fill", "black");
 
     // show city name on hover
     g.selectAll("circle")
@@ -72,7 +72,7 @@ setTimeout(function() {
           .attr("style", "display:none")
       });
     });
-}, 2000);
+}, 1500);
 
 function zoom(xyz) {
   g.transition()

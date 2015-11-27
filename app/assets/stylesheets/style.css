@@ -1,22 +1,19 @@
 body {
-    margin: 0;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-family: Menlo, regular;
-    font-weight: normal;
-    letter-spacing: 1px;
-    color: #808080;
-    background: #f2f1f1;
-    text-align: center;
-
-  }
-
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-family: Menlo, regular;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: #808080;
+  background: #f2f1f1;
+  text-align: center;
+}
 
 .container {
     margin: 0 auto;
     size: 88%;
 }
-
 
 .content_wrapper {
   width: 100%;
@@ -30,15 +27,14 @@ body {
   border: solid #808080 bold;
   width: 60%;
 }
+
 .content_text {
   border: solid #808080 bold;
   width: 38%;
 }
 
-
 .first-container {
   height: 100vh;
-
 }
 
 .second-container {
@@ -46,6 +42,7 @@ body {
     text-align: center;
     height: 100vh;
 }
+
 .third-container {
     width: 100%;
     text-align: center;
@@ -55,6 +52,7 @@ body {
 #pick-one {
   padding-top: 2em;
 }
+
 .category-button {
   font-family: Menlo, regular;
   color: #000000;
@@ -66,9 +64,8 @@ body {
   margin: 1px;
 }
 
-.letsgo-btn {
-
-    font-family: Menlo, regular;
+#pink {
+  font-family: Menlo, regular;
   color: #000000;
   font-size: 10px;
   background: #ffffff;
@@ -76,7 +73,35 @@ body {
   border: solid #000000 2px;
   text-decoration: none;
   margin: 1px;
+}
 
+
+#pink:hover {
+  font-family: Menlo, regular;
+  color: #000000;
+  font-size: 10px;
+  background: rgba(255, 64, 104,0.2);
+  padding: 10px 20px 10px 20px;
+  border: solid #000000 2px;
+  text-decoration: none;
+  margin: 1px;
+}
+
+#pink:focus {
+  background-color:rgba(255, 64, 104,0.2);
+  outline: 0;
+}
+
+
+.letsgo-btn {
+  font-family: Menlo, regular;
+  color: #000000;
+  font-size: 10px;
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #000000 2px;
+  text-decoration: none;
+  margin: 1px;
 }
 
 .letsgo-btn:hover {
@@ -88,16 +113,12 @@ body {
 }
 
 .category-button:hover {
-
   background: #D8F1A0;
-
   text-decoration: none;
 }
 
 .category-button:focus {
-
   background-color:#D8F1A0;
-
   outline: 0;
 }
 
@@ -106,38 +127,27 @@ body {
     justify-content: space-around;
     margin: 3em 3em  0px 3em;
     vertical-align: middle;
-
-
 }
 
 .bar-chart {
   padding-top: 4  0px;
-
 }
 
-
-
-
 .comparison {
-
   margin: auto;
   display: inline-block;
   justify-content: space-around;
   margin: 3em;
-
 }
 
 .comparison-text {
   width: 34%;
   display: inline-block;
-
-
 }
 
 .comparison-buttons {
   width: 66%;
   display: inline-block;
-
 }
 
 .compare-button {
@@ -153,20 +163,14 @@ body {
 }
 
 .compare-button:hover {
-
-  background: rgba(255, 64, 104,0.3),
-
+  background: #F37748;
   text-decoration: none;
 }
 
 .compare-button:focus {
-
-  background: rgba(255, 64, 104,0.3);
-
+  background: #F37748;
   outline: 0;
 }
-
-
 
 #loading {
   padding-top: 170px;
@@ -184,84 +188,55 @@ body {
   margin-top: 50px;
 }
 
-#map {
-  background-color: transparent;
-  /*border: 1px solid #ccc;*/
+#to-map {
+  padding-top: 20px;
 }
-.background {
-  fill: none;
-  pointer-events: all;
-}
-#countries, #states {
-  fill: #F9C924;
-  stroke: #fff;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-#countries .active, #states .active {
-  fill: #89a;
-}
-#cities {
-  stroke-width: 0;
-}
-.city {
-  fill: #345;
-  stroke: #fff;
-}
-pre.prettyprint {
-  border: 1px solid #ccc;
-  margin-bottom: 0;
-  padding: 9.5px;
-}
-div.tooltip {
-  color: white;
-  background: #ef4b5d;
-  padding: .5em;
-  text-shadow: #ef4b5d 0 1px 0;
-  border-radius: 2px;
-  box-shadow: 0px 0px 2px 0px #ef4b5d;
-  opacity: 0.9;
-  position: absolute;
-}
-
 
 /* MAP STYLING */
 #map {
   background-color: transparent;
   /*border: 1px solid #ccc;*/
 }
+
 .background {
   fill: none;
   pointer-events: all;
 }
+
 #countries, #states {
   fill: #F9C924;
   stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+
 #countries .active, #states .active {
   fill: #89a;
 }
+
 #cities {
   stroke-width: 0;
 }
+
 .city {
   fill: #345;
   stroke: #fff;
 }
+
 pre.prettyprint {
   border: 1px solid #ccc;
   margin-bottom: 0;
   padding: 9.5px;
 }
+
 div.tooltip {
   color: white;
   background: #ef4b5d;
-  padding: .5em;
+  padding: 0.5em;
   text-shadow: #ef4b5d 0 1px 0;
   border-radius: 2px;
   box-shadow: 0px 0px 2px 0px #ef4b5d;
   opacity: 0.9;
   position: absolute;
+  font-size: 1.5em;
 }

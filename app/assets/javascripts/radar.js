@@ -22,7 +22,7 @@ $('.comparison-buttons').on('click','.compare-button',function() {
   // GET call to database
   var options = {
     type: "GET",
-    url: 'http://localhost:3000/api/groups',
+    url: '/api/groups',
     dataType: 'json'
   };
 
@@ -54,7 +54,7 @@ $('.comparison-buttons').on('click','.compare-button',function() {
     console.log(radarOriginCityData)
     console.log(radarLabel)
 
-    // DRAW THE RADAR CHART //
+    ///// DRAW THE RADAR CHART /////
     var ctx = $("#radar-chart").get(0).getContext("2d");
 
     var dataRadar = {
@@ -62,7 +62,7 @@ $('.comparison-buttons').on('click','.compare-button',function() {
       datasets: [{
         label: "City1 name dataset",
         fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(255, 64, 104,0.3)",
+        strokeColor: "#F37748",
         
         pointColor: "rgba(220,220,220,1)",
         pointStrokeColor: "#fff",
@@ -143,6 +143,7 @@ $('.comparison-buttons').on('click','.compare-button',function() {
     var radarChart = new Chart(ctx).Radar(dataRadar, optionsRadar);
 
   });
-
+  
+  // reactivate loading div
   $('#loading2').attr("style", "display:block");
 });
