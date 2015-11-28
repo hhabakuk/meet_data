@@ -57,9 +57,9 @@ Link to presentation slides - [https://drive.google.com/file/d/0B9k7U6zZJvC7a1Q5
 3. Run the code below in your Terminal to set up your database
 
   ```
-  rake db:create
-  rake db:migrate
-  rake db:seed
+  $ rake db:create
+  $ rake db:migrate
+  $ rake db:seed
   ```
 
 ##### Option 2 - get updated data using the Meetup API
@@ -69,8 +69,8 @@ Link to presentation slides - [https://drive.google.com/file/d/0B9k7U6zZJvC7a1Q5
 3. Run the code below in your Terminal to set up your database
 
   ```
-  rake db:create
-  rake db:migrate
+  $ rake db:create
+  $ rake db:migrate
   ```
 
 4. Get an API key [here](https://secure.meetup.com/meetup_api/key/)
@@ -99,7 +99,7 @@ Link to presentation slides - [https://drive.google.com/file/d/0B9k7U6zZJvC7a1Q5
 10. Run the code below in your Terminal to seed data into your database (note: this may take up to 45 minutes depending on your connection / the Meetup API)
 
   ```
-  rake db:seed
+  $ rake db:seed
   ```
 
 ## Acknowledgements
