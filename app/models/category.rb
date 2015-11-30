@@ -4,6 +4,7 @@ class Category < ActiveRecord::Base
   BASE_URL= "http://api.meetup.com"
   API_KEY = ENV['MEETUP_KEY']
 
+  # generate seed data for categories
   def self.init_categories
     categories = HTTParty.get("#{ BASE_URL }/2/categories.json/?key=#{ API_KEY }")
 
