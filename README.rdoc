@@ -1,28 +1,64 @@
-== README
+==Where to now (group project)
+===============================
+To set up:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+fork the repo to your own github repo.
+clone from your own github to your local computer.
+Then set up locally:
 
-Things you may want to cover:
+configure .gitignore
+configure your database.yml and add to .gitignore
+bundle install
+Do whatever mac thing you need to do.
+rake db:create
+rake db:migrate
+rails server (or rails s)
+in browser go to localhost:3000 to see if it all worked.
 
-* Ruby version
 
-* System dependencies
+=== About the site:
+A single page web application focused on data visualization giving an exposure of the culture of cities around the world, based on API data from Meetup.com.
 
-* Configuration
+=== Team roles:
+Aviel: API, Back-end Development, CSS
+Bono: Front-end development, CSS
+Helen: Git Lord, Content manager, CSS master
 
-* Database creation
+=== What we used:
+- Trello for project management
+- Ruby on Rails
+- Javascript Libraries: Jquery, smooth-scroll, chart, D3
+- CSS
+- Postgresql
 
-* Database initialization
+===  What worked 
+- Clearly defined roles 
+- Opportunities for partner coding
+- Deployment for the site from the initial stages of the project
+- Clear concept about the back-end logic, revised when needed
+- Everyone got to work with their strengths
+- Most members took a risk and tried something new
+- A relaxed environment
 
-* How to run the test suite
+=== What didn’t
+- Occasional gitHub glitches
+- Adapting to a new gitHub workflow (for some)
+- try a few libraries for css effect, proved not fit the main theme
 
-* Services (job queues, cache servers, search engines, etc.)
+
+=== Things you may want to cover:
+
+* Ruby on Rails
+
+* AJAX OR BACKBONE
+
+* Database creation, initialization, 
+
+* API and JSON
+
+* Data visualization
 
 * Deployment instructions
 
 * ...
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
